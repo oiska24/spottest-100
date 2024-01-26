@@ -1,12 +1,19 @@
 credentials/*
-data/*
+
+data/results/*
+!data/results/
+data/results/individual_lists/*
+!data/results/individual_lists/
+
+data/links.csv
+
+!data/sample_links.csv
 docs/*
 venv/
 
 # Node artifact files
 node_modules/
 dist/
-*.csv
 *.json
 .env
 .cache
