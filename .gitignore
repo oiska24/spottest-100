@@ -8,6 +8,8 @@ node_modules/
 dist/
 *.csv
 *.json
+.env
+.cache
 
 # Don't ignore settings.json
 !.vscode/settings.json
