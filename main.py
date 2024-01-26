@@ -48,39 +48,32 @@ def get_playlist_uri_from_link(playlist_link: str) -> str:
     raise ValueError("Expected format: https://open.spotify.com/playlist/...")
 
 
-def save_csv_from_uri(user):
+def df_from_uri(user):
     # get uri from https link
     playlist_uri = get_playlist_uri_from_link(user["link"])
-
     # get list of tracks in a given playlist (note: max playlist length 100)
     tracks = session.playlist_tracks(playlist_uri)["items"]
-
-    # create csv file
-    file_path = "/".join([OUTPUT_DIR, user["name"] + ".csv"])
-    with open(file_path, "w", encoding="utf-8") as file:
-        writer = csv.writer(file)
-        writer.writerow(["track", "artist", "weight", user["name"]])
-        # start weight counter
-        j = 0
-
-        # extract name and artist
-        for track in tracks:
-            name = track["track"]["name"]
-            artists = ", ".join(
-                [artist["name"] for artist in track["track"]["artists"]]
-            )
-
-            # write to csv
-            writer.writerow([name, artists, weights[j], rank[j]])
-            # increment weight counter
-            j = j + 1
-
-    logger.info("Extracted data saved in %s", file_path)
+    # # create csv file
+    # file_path = "/".join([OUTPUT_DIR, user["name"] + ".csv"])
+    df = pd.DataFrame(columns=['track', 'artist', 'weight', user['name']])
+    # start weight counter
+    j = 0
+    # extract name and artist
+    for track in tracks:
+        name = track["track"]["name"]
+        artists = ", ".join(
+            [artist["name"] for artist in track["track"]["artists"]]
+        )
+        # write to csv
+        df.loc[j] = name + artists + weights[j] + rank[j]
+        # increment weight counter
+        j = j + 1
+    return df
 
 
-def save_csvs_from_links(df):
-    for i in range(0,(links_df.shape[0])):
-        save_csv_from_uri(df.iloc[i])
+def create_dfs_from_links(df):
+    for i in range(0,(df.shape[0])):
+        df_from_uri(df.iloc[i])
 
 
 def csv_to_df(filename):   
@@ -115,7 +108,7 @@ def combine_df(df1, df2):
                     break
                 print('track matched, artist didnt')
                 print([df2.iloc[j]['track'], df2.iloc[j]['artist'], df1.iloc[i]['artist']])
-        if match == False:
+        if match is False:
             new_track = pd.DataFrame([[df2.iloc[j]['track'], df2.iloc[j]['artist'], df2.iloc[j]['weight'], df2.iloc[j][df2.columns[3]]]], columns=['track', 'artist', 'weight', df2.columns[3]])
             df1 = pd.concat([df1, new_track], ignore_index=True)
     return df1
@@ -133,8 +126,8 @@ if __name__ == "__main__":
 
     links_df = csv_to_df(filename="links")
 
-    save_csvs_from_links(links_df) # to add all playlists as csvs
-    save_csv_from_uri(links_df.iloc[16]) # to add one playlists as a csv
+    create_dfs_from_links(links_df)  # to add all playlists as csvs
+    # df_from_uri(links_df.iloc[16])  # to add one playlists as a csv
 
     # create_dfs_from_links(links_df)
     df_0  = csv_to_df(links_df.iloc[0]["name"])
