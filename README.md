@@ -1,4 +1,6 @@
 # Spottest 100 #
+![alt text](spottest-100.png)
+
 ## About ##
 Create a custom Hottest 100 with your friends by combining your Spotify Wrapped playlists together in a countdown.
 
@@ -8,8 +10,8 @@ Create a custom Hottest 100 with your friends by combining your Spotify Wrapped 
 3. Typical development environment with Python 3.10.1+ installed
 
 ## Setup ##
-1. clone this repo locally and setup a virtual environment in Python
-`git clone git`
-`python3 -m venv venv`
-`source venv/bin/activate`
+1. clone this repo locally and setup a virtual environment in Python\
+`git clone git`\
+`python3 -m venv venv`\
+`source venv/bin/activate`\
 `pip install -r requirements.txt`
