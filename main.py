@@ -79,6 +79,9 @@ def df_from_uri(user, save_playlist_csv=False):
 def create_dfs_from_links(links_df, save_playlist_csv):
     for i in range(0, (links_df.shape[0])):
         df_from_uri(links_df.iloc[i], save_playlist_csv=save_playlist_csv)
+    df_comb = combine_all_dfs(links_df=links_df)  # combine each df into one and sort by weight
+    df_to_csv(df=df_comb, OUTPUT_FILE_NAME='results.csv', OUTPUT_DIR=RESULTS_DIR)  # save results to csv
+    return df_comb
 
 
 def csv_to_df(filename, INPUT_DIR):  
@@ -128,6 +131,7 @@ def combine_all_dfs(links_df):
 def countdown(df_comb, COUNTDOWN_NUMBER):
     df_countdown = df_comb.iloc[0:COUNTDOWN_NUMBER]
     df_countdown = df_countdown.sort_values(by=['weight'], ascending=True, ignore_index=True)
+    df_to_csv(df=df_countdown, OUTPUT_FILE_NAME='countdown.csv', OUTPUT_DIR=RESULTS_DIR)  # save countdown to csv
     return df_countdown
 
 
@@ -137,8 +141,5 @@ if __name__ == "__main__":
     )   
     session = spotipy.Spotify(client_credentials_manager=client_credentials_manager)  # create spotify session object
     links_df = csv_to_df(filename="links", INPUT_DIR=LINKS_DIR)  # convert links csv to df
-    create_dfs_from_links(links_df=links_df, save_playlist_csv=True)  # add all playlists as dataframes
-    df_comb = combine_all_dfs(links_df=links_df)  # combine each df into one and sort by weight
-    df_to_csv(df=df_comb, OUTPUT_FILE_NAME='results.csv', OUTPUT_DIR=RESULTS_DIR)  # save results to csv
+    df_comb = create_dfs_from_links(links_df=links_df, save_playlist_csv=True)  # add all playlists as dataframes
     df_countdown = countdown(df_comb, COUNTDOWN_NUMBER)  # create countdown list of top x songs
-    df_to_csv(df=df_countdown, OUTPUT_FILE_NAME='countdown.csv', OUTPUT_DIR=RESULTS_DIR)  # save countdown to csv
