@@ -1,3 +1,4 @@
-python-dotenv
-spotipy
-pandas
+python-dotenv=1.0.1
+spotipy=2.23.0
+pandas=2.2.0
+pyarrow=15.0.0

@@ -16,7 +16,10 @@ CLIENT_ID = os.getenv("CLIENT_ID", "")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET", "")
 OATH_CREATE_PLAYLIST = os.getenv("OATH_CREATE_PLAYLIST", "")
 # specify csv files and directory
-OUTPUT_DIR = "data"
+LINKS_DIR = "data"
+RESULTS_DIR = "data/results"
+PLAYLISTS_DIR = "data/results/individual_playlists"
+COUNTDOWN_NUMBER = 50
 
 # create array of weighting
 weights = list(range(100,0,-1))
@@ -48,59 +51,49 @@ def get_playlist_uri_from_link(playlist_link: str) -> str:
     raise ValueError("Expected format: https://open.spotify.com/playlist/...")
 
 
-def save_csv_from_uri(user):
+def df_from_uri(user, save_playlist_csv=False):
+    # df_from_uri(links_df.iloc[n])  # to add one playlists as a csv
     # get uri from https link
     playlist_uri = get_playlist_uri_from_link(user["link"])
-
     # get list of tracks in a given playlist (note: max playlist length 100)
     tracks = session.playlist_tracks(playlist_uri)["items"]
-
-    # create csv file
-    file_path = "/".join([OUTPUT_DIR, user["name"] + ".csv"])
-    with open(file_path, "w", encoding="utf-8") as file:
-        writer = csv.writer(file)
-        writer.writerow(["track", "artist", "weight", user["name"]])
-        # start weight counter
-        j = 0
-
-        # extract name and artist
-        for track in tracks:
-            name = track["track"]["name"]
-            artists = ", ".join(
-                [artist["name"] for artist in track["track"]["artists"]]
-            )
-
-            # write to csv
-            writer.writerow([name, artists, weights[j], rank[j]])
-            # increment weight counter
-            j = j + 1
-
-    logger.info("Extracted data saved in %s", file_path)
+    # create empty dataframe
+    df = pd.DataFrame(columns=['track', 'artist', 'weight', user['name']])
+    # start weight counter
+    j = 0
+    # extract name and artist
+    for track in tracks:
+        name = track["track"]["name"]
+        artists = ", ".join(
+            [artist["name"] for artist in track["track"]["artists"]]
+        )
+        # write to df
+        df.loc[j] = [name, artists, weights[j], rank[j]]
+        # increment weight counter
+        j = j + 1
+    if save_playlist_csv is True:
+        df_to_csv(df=df, OUTPUT_FILE_NAME=f'{user["name"]}' + '.csv', OUTPUT_DIR=PLAYLISTS_DIR)
+    globals()[f'df_{user["name"]}'] = df
 
 
-def save_csvs_from_links(df):
-    for i in range(0,(links_df.shape[0])):
-        save_csv_from_uri(df.iloc[i])
+def create_dfs_from_links(links_df, save_playlist_csv):
+    for i in range(0, (links_df.shape[0])):
+        df_from_uri(links_df.iloc[i], save_playlist_csv=save_playlist_csv)
 
 
-def csv_to_df(filename):   
-    file_path = "/".join([OUTPUT_DIR, filename + ".csv"])
+def csv_to_df(filename, INPUT_DIR):  
+    file_path = "/".join([INPUT_DIR, filename + ".csv"])
     df = pd.read_csv(file_path)
     return df
 
 
-# def create_dfs_from_links(df):
-#     for i in range(0,(links_df.shape[0])):
-#         csv_to_df(df.iloc[i]["name"])
-
-
-def df_to_csv(df, OUTPUT_FILE_NAME):   
+def df_to_csv(df, OUTPUT_FILE_NAME, OUTPUT_DIR):   
     file_path = "/".join([OUTPUT_DIR, OUTPUT_FILE_NAME])
     df.to_csv(file_path)
     print('\nData saved in', file_path)
 
 
-def combine_df(df1, df2):
+def combine_two_dfs(df1, df2):
     length = df1.shape[0]
     for j in range(0, df2.shape[0]):
         match = False
@@ -115,86 +108,37 @@ def combine_df(df1, df2):
                     break
                 print('track matched, artist didnt')
                 print([df2.iloc[j]['track'], df2.iloc[j]['artist'], df1.iloc[i]['artist']])
-        if match == False:
+        if match is False:
             new_track = pd.DataFrame([[df2.iloc[j]['track'], df2.iloc[j]['artist'], df2.iloc[j]['weight'], df2.iloc[j][df2.columns[3]]]], columns=['track', 'artist', 'weight', df2.columns[3]])
             df1 = pd.concat([df1, new_track], ignore_index=True)
     return df1
 
 
-if __name__ == "__main__":
-    # authenticate
-    client_credentials_manager = SpotifyClientCredentials(
-        client_id=CLIENT_ID, client_secret=CLIENT_SECRET
-    )
-
-    # create spotify session object
-    session = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
-    # user_id = "1236848429"
-
-    links_df = csv_to_df(filename="links")
-
-    save_csvs_from_links(links_df) # to add all playlists as csvs
-    save_csv_from_uri(links_df.iloc[16]) # to add one playlists as a csv
-
-    # create_dfs_from_links(links_df)
-    df_0  = csv_to_df(links_df.iloc[0]["name"])
-    df_1 = csv_to_df(links_df.iloc[1]["name"])
-    df_2 = csv_to_df(links_df.iloc[2]["name"])
-    df_3 = csv_to_df(links_df.iloc[3]["name"])
-    df_4 = csv_to_df(links_df.iloc[4]["name"])
-    df_5 = csv_to_df(links_df.iloc[5]["name"])
-    df_6 = csv_to_df(links_df.iloc[6]["name"])
-    df_7 = csv_to_df(links_df.iloc[7]["name"])
-    df_8 = csv_to_df(links_df.iloc[8]["name"])
-    df_9 = csv_to_df(links_df.iloc[9]["name"])
-    df_10 = csv_to_df(links_df.iloc[10]["name"])
-    df_11 = csv_to_df(links_df.iloc[11]["name"])
-    df_12 = csv_to_df(links_df.iloc[12]["name"])
-    df_13 = csv_to_df(links_df.iloc[13]["name"])
-    df_14 = csv_to_df(links_df.iloc[14]["name"])
-    df_15 = csv_to_df(links_df.iloc[15]["name"])
-    df_16 = csv_to_df(links_df.iloc[16]["name"])
-
-    df_count = df_0
-    print('\nSearching 1')
-    df_count = combine_df(df1=df_count, df2=df_1)
-    print('\nSearching 2')
-    df_count = combine_df(df1=df_count, df2=df_2)
-    print('\nSearching 3')
-    df_count = combine_df(df1=df_count, df2=df_3)
-    print('\nSearching 4')
-    df_count = combine_df(df1=df_count, df2=df_4)
-    print('\nSearching 5')
-    df_count = combine_df(df1=df_count, df2=df_5)
-    print('\nSearching 6')
-    df_count = combine_df(df1=df_count, df2=df_6)
-    print('\nSearching 7')
-    df_count = combine_df(df1=df_count, df2=df_7)
-    print('\nSearching 8')
-    df_count = combine_df(df1=df_count, df2=df_8)
-    print('\nSearching 9')
-    df_count = combine_df(df1=df_count, df2=df_9)
-    print('\nSearching 10')
-    df_count = combine_df(df1=df_count, df2=df_10)
-    print('\nSearching 11')
-    df_count = combine_df(df1=df_count, df2=df_11)
-    print('\nSearching 12')
-    df_count = combine_df(df1=df_count, df2=df_12)
-    print('\nSearching 13')
-    df_count = combine_df(df1=df_count, df2=df_13)
-    print('\nSearching 14')
-    df_count = combine_df(df1=df_count, df2=df_14)
-    print('\nSearching 15')
-    df_count = combine_df(df1=df_count, df2=df_15)
-    print('\nSearching 16')
-    df_count = combine_df(df1=df_count, df2=df_16)
+def combine_all_dfs(links_df):
+    df_comb = globals()[f'df_{links_df.iloc[0]["name"]}']
+    for i in range(1, (links_df.shape[0])):
+        print('\nSearching ' + links_df.iloc[i]["name"])
+        df_comb = combine_two_dfs(df1=df_comb, df2=globals()[f'df_{links_df.iloc[i]["name"]}'])
     print('\nCombination successful')
-
-    df_count = df_count.sort_values(by=['weight'], ascending=False, ignore_index=True)
-    df_50 = df_count.iloc[0:50]
-    df_50 = df_50.sort_values(by=['weight'], ascending=True, ignore_index=True)
+    df_comb = df_comb.sort_values(by=['weight'], ascending=False, ignore_index=True)
     print('\nSorted results')
+    return df_comb
 
-    df_to_csv(df=df_50, OUTPUT_FILE_NAME='hot50.csv')
-    df_to_csv(df=df_count, OUTPUT_FILE_NAME='countdown.csv')
 
+def countdown(df_comb, COUNTDOWN_NUMBER):
+    df_countdown = df_comb.iloc[0:COUNTDOWN_NUMBER]
+    df_countdown = df_countdown.sort_values(by=['weight'], ascending=True, ignore_index=True)
+    return df_countdown
+
+
+if __name__ == "__main__":
+    client_credentials_manager = SpotifyClientCredentials(
+        client_id=CLIENT_ID, client_secret=CLIENT_SECRET  # authenticate
+    )   
+    session = spotipy.Spotify(client_credentials_manager=client_credentials_manager)  # create spotify session object
+    links_df = csv_to_df(filename="links", INPUT_DIR=LINKS_DIR)  # convert links csv to df
+    create_dfs_from_links(links_df=links_df, save_playlist_csv=True)  # add all playlists as dataframes
+    df_comb = combine_all_dfs(links_df=links_df)  # combine each df into one and sort by weight
+    df_to_csv(df=df_comb, OUTPUT_FILE_NAME='results.csv', OUTPUT_DIR=RESULTS_DIR)  # save results to csv
+    df_countdown = countdown(df_comb, COUNTDOWN_NUMBER)  # create countdown list of top x songs
+    df_to_csv(df=df_countdown, OUTPUT_FILE_NAME='countdown.csv', OUTPUT_DIR=RESULTS_DIR)  # save countdown to csv
