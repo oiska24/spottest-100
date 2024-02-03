@@ -3,7 +3,7 @@ import os
 import re
 import spotipy
 import pandas as pd
-import file
+from data_conversion_utils import csv_to_df, df_to_csv
 from config import PLAYLISTS_DIR, RESULTS_DIR, LINKS_DIR
 
 # load credentials from .env file
@@ -74,7 +74,7 @@ def df_from_uri(user, save_playlist_csv=False):
         # increment weight counter
         j = j + 1
     if save_playlist_csv is True:
-        file.df_to_csv(
+        df_to_csv(
             df=df,
             OUTPUT_FILE_NAME=f'{user["name"]}' + '.csv',
             OUTPUT_DIR=PLAYLISTS_DIR
@@ -83,14 +83,14 @@ def df_from_uri(user, save_playlist_csv=False):
 
 
 def combine_data_from_links(save_playlist_csv=False):
-    links_df = file.csv_to_df(filename="links", INPUT_DIR=LINKS_DIR)
+    links_df = csv_to_df(filename="links", INPUT_DIR=LINKS_DIR)
     for i in range(0, (links_df.shape[0])):
         df_from_uri(
             user=links_df.iloc[i],
             save_playlist_csv=save_playlist_csv
         )
     df_comb = combine_all_dfs(links_df=links_df)
-    file.df_to_csv(
+    df_to_csv(
         df=df_comb,
         OUTPUT_FILE_NAME='results.csv',
         OUTPUT_DIR=RESULTS_DIR
@@ -163,7 +163,7 @@ def create_countdown(df_comb, COUNTDOWN_NUMBER, save_playlist_csv=True):
         ignore_index=True
     )
     if save_playlist_csv is True:
-        file.df_to_csv(
+        df_to_csv(
             df=df_countdown,
             OUTPUT_FILE_NAME='countdown.csv',
             OUTPUT_DIR=RESULTS_DIR
