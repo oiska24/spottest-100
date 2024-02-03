@@ -8,8 +8,8 @@ Create a custom Hottest 100 with your friends by combining your Spotify Wrapped 
 3. Typical development environment with Python 3.10.1+ installed
 
 ## Setup ##
-1. clone this repo locally and setup a virtual environment in Python
-`git clone git`
-`python3 -m venv venv`
-`source venv/bin/activate`
-`pip install -r requirements.txt`
+1. Clone the repository: `git clone <your-repo-url>`
+2. Create a new virtual environment: `python3 -m venv venv`
+3. Activate the virtual environment: `source venv/bin/activate` on Unix or `venv\Scripts\activate` on Windows
+4. Install the project dependencies: `pip install -r requirements.txt`
+5. Install the stubs: `source postactivate`
