@@ -1,6 +1,7 @@
 from spotify import authenticate_spotify
 from spotify import combine_data_from_links
 from spotify import create_countdown
+from spotify import save_countdown_to_spotify
 
 COUNTDOWN_NUMBER = 50
 
@@ -12,3 +13,4 @@ if __name__ == "__main__":
         COUNTDOWN_NUMBER,
         save_playlist_csv=True
     )
+    # save_countdown_to_spotify()

@@ -11,7 +11,7 @@ load_dotenv()
 CLIENT_ID = os.getenv("CLIENT_ID", "")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET", "")
 SESSION = None
-OATH_CREATE_PLAYLIST = os.getenv("OATH_CREATE_PLAYLIST", "")
+# OATH_CREATE_PLAYLIST = os.getenv("OATH_CREATE_PLAYLIST", "")
 
 # create array of weighting
 WEIGHTS = list(range(100, 0, -1))
@@ -58,6 +58,8 @@ def df_from_uri(user, save_playlist_csv=False):
     # get uri from https link
     playlist_uri = get_playlist_uri_from_link(user["link"])
     # get list of tracks in a given playlist (note: max playlist length 100)
+    # usr = SESSION.current_user() or .me() in normal API
+    # print(usr)
     tracks = SESSION.playlist_tracks(playlist_uri)["items"]
     # create empty dataframe
     df = pd.DataFrame(columns=['track', 'artist', 'weight', user['name']])
@@ -80,6 +82,19 @@ def df_from_uri(user, save_playlist_csv=False):
             OUTPUT_DIR=PLAYLISTS_DIR
             )
     globals()[f'df_{user["name"]}'] = df
+
+
+def save_countdown_to_spotify():
+    user = CLIENT_ID
+    name = "Spottest 100"
+    desc = "Playlist created via spottest-100"
+    SESSION.user_playlist_create(
+        user,
+        name,
+        public=False,
+        collaborative=False,
+        description=desc
+    )
 
 
 def combine_data_from_links(save_playlist_csv=False):
