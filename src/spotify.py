@@ -32,6 +32,7 @@ def get_token():
         "client_secret": CLIENT_SECRET
     }
     response = requests.post(url=url, data=data, headers=headers)
+    print(response.status_code)  # TODO turn to logs
     TOKEN = response.json()['access_token']
     return None
 
@@ -43,6 +44,7 @@ def get_playlist(link):
         "Authorization": "Bearer " + TOKEN
     }
     response = requests.get(url=url, headers=headers)
+    print(response.status_code)  # TODO turn to logs
     return response
 
 
@@ -98,17 +100,21 @@ def df_from_uri(user, save_playlist_csv=False):
     globals()[f'df_{user["name"]}'] = df
 
 
-# def save_countdown_to_spotify():
-#     user = CLIENT_ID
-#     name = "Spottest 100"
-#     desc = "Playlist created via spottest-100"
-#     SESSION.user_playlist_create(
-#         user,
-#         name,
-#         public=False,
-#         collaborative=False,
-#         description=desc
-#     )
+def save_countdown_to_spotify(playlist_name, playlist_description):
+    url = BASE_URL + "/users/%s/playlists" % (CLIENT_ID)
+    headers = {
+        "Authorization": "Bearer " + TOKEN
+    }
+    data = {
+        'name': playlist_name,
+        'public': False,
+        'collaborative': False,
+        'description': playlist_description
+    }
+    response = requests.post(url=url, data=data, headers=headers)
+    print(response.status_code)  # TODO turn to logs
+    print(response.json())
+    return None
 
 
 def combine_data_from_links(save_playlist_csv=False):
