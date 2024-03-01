@@ -103,7 +103,7 @@ def df_from_uri(user, save_playlist_csv=False):
 def save_countdown_to_spotify(playlist_name, playlist_description):
     url = BASE_URL + "/users/%s/playlists" % (CLIENT_ID)
     headers = {
-        "Authorization": "Bearer " + TOKEN
+        "Authorization": "Bearer " + "TOKEN"
     }
     data = {
         'name': playlist_name,
@@ -124,13 +124,13 @@ def combine_data_from_links(save_playlist_csv=False):
             user=links_df.iloc[i],
             save_playlist_csv=save_playlist_csv
         )
-    df_comb = combine_all_dfs(links_df=links_df)
+    combined_df = combine_all_dfs(links_df=links_df)
     df_to_csv(
-        df=df_comb,
+        df=combined_df,
         OUTPUT_FILE_NAME='results.csv',
         OUTPUT_DIR=RESULTS_DIR
         )
-    return df_comb
+    return combined_df
 
 
 def combine_two_dfs(df1, df2):
@@ -173,25 +173,25 @@ def combine_two_dfs(df1, df2):
 
 
 def combine_all_dfs(links_df):
-    df_comb = globals()[f'df_{links_df.iloc[0]["name"]}']
+    combined_df = globals()[f'df_{links_df.iloc[0]["name"]}']
     for i in range(1, (links_df.shape[0])):
         print('\nSearching ' + links_df.iloc[i]["name"])
-        df_comb = combine_two_dfs(
-            df1=df_comb,
+        combined_df = combine_two_dfs(
+            df1=combined_df,
             df2=globals()[f'df_{links_df.iloc[i]["name"]}']
             )
     print('\nCombination successful')
-    df_comb = df_comb.sort_values(
+    combined_df = combined_df.sort_values(
         by=['weight'],
         ascending=False,
         ignore_index=True
     )
     print('\nSorted results')
-    return df_comb
+    return combined_df
 
 
-def create_countdown(df_comb, COUNTDOWN_NUMBER, save_playlist_csv=True):
-    df_countdown = df_comb.iloc[0:COUNTDOWN_NUMBER]
+def create_countdown(combined_df, countdown_number, save_playlist_csv=True):
+    df_countdown = combined_df.iloc[0:countdown_number]
     df_countdown = df_countdown.sort_values(
         by=['weight'],
         ascending=True,
