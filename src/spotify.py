@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 import os
 import re
-import spotipy
+# import spotipy
 import requests
 import pandas as pd
 from data_conversion_utils import csv_to_df, df_to_csv
@@ -45,18 +45,17 @@ def get_playlist(token, link):
         "Authorization": "Bearer " + token
     }
     response = requests.get(url=url, headers=headers)
-    print(response.json())
     return response
 
 
-def authenticate_spotify():
-    global SESSION
-    client_credentials_manager = spotipy.SpotifyClientCredentials(
-        client_id=CLIENT_ID, client_secret=CLIENT_SECRET
-    )
-    SESSION = spotipy.Spotify(
-        client_credentials_manager=client_credentials_manager
-    )
+# def authenticate_spotify():
+#     global SESSION
+#     client_credentials_manager = spotipy.SpotifyClientCredentials(
+#         client_id=CLIENT_ID, client_secret=CLIENT_SECRET
+#     )
+#     SESSION = spotipy.Spotify(
+#         client_credentials_manager=client_credentials_manager
+#     )
 
 
 def get_playlist_uri_from_link(playlist_link: str) -> str:
@@ -83,12 +82,10 @@ def get_playlist_uri_from_link(playlist_link: str) -> str:
 
 def df_from_uri(user, save_playlist_csv=False):
     # df_from_uri(links_df.iloc[n])  # to add one playlists as a csv
-    # get uri from https link
-    playlist_uri = get_playlist_uri_from_link(user["link"])
     # get list of tracks in a given playlist (note: max playlist length 100)
-    # usr = SESSION.current_user() or .me() in normal API
-    # print(usr)
-    tracks = SESSION.playlist_tracks(playlist_uri)["items"]
+    token = get_token()
+    response = get_playlist(token=token, link=user["link"])
+    tracks = response.json()["items"]
     # create empty dataframe
     df = pd.DataFrame(columns=['track', 'artist', 'weight', user['name']])
     # start weight counter
@@ -112,17 +109,17 @@ def df_from_uri(user, save_playlist_csv=False):
     globals()[f'df_{user["name"]}'] = df
 
 
-def save_countdown_to_spotify():
-    user = CLIENT_ID
-    name = "Spottest 100"
-    desc = "Playlist created via spottest-100"
-    SESSION.user_playlist_create(
-        user,
-        name,
-        public=False,
-        collaborative=False,
-        description=desc
-    )
+# def save_countdown_to_spotify():
+#     user = CLIENT_ID
+#     name = "Spottest 100"
+#     desc = "Playlist created via spottest-100"
+#     SESSION.user_playlist_create(
+#         user,
+#         name,
+#         public=False,
+#         collaborative=False,
+#         description=desc
+#     )
 
 
 def combine_data_from_links(save_playlist_csv=False):
