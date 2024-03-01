@@ -1,7 +1,6 @@
 from dotenv import load_dotenv
 import os
 import re
-# import spotipy
 import requests
 import pandas as pd
 from data_conversion_utils import csv_to_df, df_to_csv
@@ -11,9 +10,7 @@ from config import PLAYLISTS_DIR, RESULTS_DIR, LINKS_DIR
 load_dotenv()
 CLIENT_ID = os.getenv("CLIENT_ID", "")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET", "")
-SESSION = None
 BASE_URL = "https://api.spotify.com/v1"
-# OATH_CREATE_PLAYLIST = os.getenv("OATH_CREATE_PLAYLIST", "")
 
 # create array of weighting
 WEIGHTS = list(range(100, 0, -1))
@@ -24,6 +21,7 @@ for x in range(0, 10):
 
 
 def get_token():
+    global TOKEN
     url = "https://accounts.spotify.com/api/token"
     headers = {
         "Content-Type": "application/x-www-form-urlencoded"
@@ -34,28 +32,18 @@ def get_token():
         "client_secret": CLIENT_SECRET
     }
     response = requests.post(url=url, data=data, headers=headers)
-    token = response.json()['access_token']
-    return token
+    TOKEN = response.json()['access_token']
+    return None
 
 
-def get_playlist(token, link):
+def get_playlist(link):
     plid = get_playlist_uri_from_link(link)
     url = BASE_URL + "/playlists/%s/tracks" % (plid)
     headers = {
-        "Authorization": "Bearer " + token
+        "Authorization": "Bearer " + TOKEN
     }
     response = requests.get(url=url, headers=headers)
     return response
-
-
-# def authenticate_spotify():
-#     global SESSION
-#     client_credentials_manager = spotipy.SpotifyClientCredentials(
-#         client_id=CLIENT_ID, client_secret=CLIENT_SECRET
-#     )
-#     SESSION = spotipy.Spotify(
-#         client_credentials_manager=client_credentials_manager
-#     )
 
 
 def get_playlist_uri_from_link(playlist_link: str) -> str:
@@ -83,8 +71,9 @@ def get_playlist_uri_from_link(playlist_link: str) -> str:
 def df_from_uri(user, save_playlist_csv=False):
     # df_from_uri(links_df.iloc[n])  # to add one playlists as a csv
     # get list of tracks in a given playlist (note: max playlist length 100)
-    token = get_token()
-    response = get_playlist(token=token, link=user["link"])
+    link = user['link']
+    # API call to get playlist info
+    response = get_playlist(link=link)
     tracks = response.json()["items"]
     # create empty dataframe
     df = pd.DataFrame(columns=['track', 'artist', 'weight', user['name']])
