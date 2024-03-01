@@ -103,7 +103,7 @@ def df_from_uri(user, save_playlist_csv=False):
 def save_countdown_to_spotify(playlist_name, playlist_description):
     url = BASE_URL + "/users/%s/playlists" % (CLIENT_ID)
     headers = {
-        "Authorization": "Bearer " + "TOKEN"
+        "Authorization": "Bearer " + TOKEN
     }
     data = {
         'name': playlist_name,
