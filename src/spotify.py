@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 import os
 import re
 import spotipy
+import requests
 import pandas as pd
 from data_conversion_utils import csv_to_df, df_to_csv
 from config import PLAYLISTS_DIR, RESULTS_DIR, LINKS_DIR
@@ -11,6 +12,7 @@ load_dotenv()
 CLIENT_ID = os.getenv("CLIENT_ID", "")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET", "")
 SESSION = None
+BASE_URL = "https://api.spotify.com"
 # OATH_CREATE_PLAYLIST = os.getenv("OATH_CREATE_PLAYLIST", "")
 
 # create array of weighting
@@ -19,6 +21,31 @@ RANK = list(range(1, 101, 1))
 # add column for each name in count with the rank value specified
 for x in range(0, 10):
     WEIGHTS[x] = WEIGHTS[x] + 10
+
+
+def get_token():
+    url = "https://accounts.spotify.com/api/token"
+    headers = {
+        "Content-Type": "application/x-www-form-urlencoded"
+    }
+    data = {
+        "grant_type": "client_credentials",
+        "client_id": CLIENT_ID,
+        "client_secret": CLIENT_SECRET
+    }
+    response = requests.post(url=url, data=data, headers=headers)
+    token = response.json()['access_token']
+    return token
+
+
+# def get_playlist(token, link):
+#     plid = get_playlist_uri_from_link(link)
+#     url = BASE_URL + "playlists/%s/tracks" % (plid)
+#     headers = {
+#         "Authorization": "Bearer " + token.access_token
+#     }
+#     response = requests.get(url=url, headers=headers)
+#     return response
 
 
 def authenticate_spotify():

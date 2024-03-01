@@ -1,5 +1,6 @@
 mypy==1.8.0
-spotipy==2.23.0
+requests==2.31.0
+spotipy==223.0
 pandas==2.2.0
 pandas-stubs==2.1.4.231227
 pyarrow==15.0.0
