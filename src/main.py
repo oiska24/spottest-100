@@ -9,7 +9,7 @@ COUNTDOWN_NUMBER = 50
 if __name__ == '__main__':
     token = spotify.get_token()
     link = "https://open.spotify.com/playlist/4msINp4cNYtKuAlLZAQowv?si=535858ec39c141be"
-    # response = spotify.get_playlist(rk=link)
+    response = spotify.get_playlist(token=token, link=link)
 
     # working code
     # authenticate_spotify()

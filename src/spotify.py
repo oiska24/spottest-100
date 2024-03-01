@@ -12,7 +12,7 @@ load_dotenv()
 CLIENT_ID = os.getenv("CLIENT_ID", "")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET", "")
 SESSION = None
-BASE_URL = "https://api.spotify.com"
+BASE_URL = "https://api.spotify.com/v1"
 # OATH_CREATE_PLAYLIST = os.getenv("OATH_CREATE_PLAYLIST", "")
 
 # create array of weighting
@@ -38,14 +38,15 @@ def get_token():
     return token
 
 
-# def get_playlist(token, link):
-#     plid = get_playlist_uri_from_link(link)
-#     url = BASE_URL + "playlists/%s/tracks" % (plid)
-#     headers = {
-#         "Authorization": "Bearer " + token.access_token
-#     }
-#     response = requests.get(url=url, headers=headers)
-#     return response
+def get_playlist(token, link):
+    plid = get_playlist_uri_from_link(link)
+    url = BASE_URL + "/playlists/%s/tracks" % (plid)
+    headers = {
+        "Authorization": "Bearer " + token
+    }
+    response = requests.get(url=url, headers=headers)
+    print(response.json())
+    return response
 
 
 def authenticate_spotify():
