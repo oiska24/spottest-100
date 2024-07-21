@@ -6,6 +6,10 @@ import pandas as pd
 from data_conversion_utils import csv_to_df, df_to_csv
 from config import PLAYLISTS_DIR, RESULTS_DIR, LINKS_DIR
 
+PLAYLIST_NUMBER_OF_TRACKS = 100
+BONUS_NUMBER_OF_TRACKS = 10
+BONUS_WEIGHT = 10
+
 # load credentials from .env file
 load_dotenv()
 CLIENT_ID = os.getenv("CLIENT_ID", "")
@@ -13,11 +17,11 @@ CLIENT_SECRET = os.getenv("CLIENT_SECRET", "")
 BASE_URL = "https://api.spotify.com/v1"
 
 # create array of weighting
-WEIGHTS = list(range(100, 0, -1))
-RANK = list(range(1, 101, 1))
+WEIGHTS = list(range(PLAYLIST_NUMBER_OF_TRACKS, 0, -1))
+RANK = list(range(1, PLAYLIST_NUMBER_OF_TRACKS + 1, 1))
 # add column for each name in count with the rank value specified
-for x in range(0, 10):
-    WEIGHTS[x] = WEIGHTS[x] + 10
+for x in range(0, BONUS_NUMBER_OF_TRACKS):
+    WEIGHTS[x] = WEIGHTS[x] + BONUS_WEIGHT
 
 
 def get_token():
