@@ -8,4 +8,4 @@
 ### Provide countdown playlist
 ![alt text](<Provide countdown playlist.jpg>)
 ## 4 Measures of Effectiveness ##
-![alt text](<4 Measures of Effectiveness.jpg>)
+![alt text](<Measures of Effectiveness.jpg>)
