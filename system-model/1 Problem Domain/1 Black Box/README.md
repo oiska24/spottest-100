@@ -2,10 +2,10 @@
 ## 1 Stakeholder Needs ##
 ![alt text](<1 Stakeholder Needs.jpg>)
 ## 2 System Context ##
-![alt text](<2 System Context.jpg>)
+![alt text](<Website In Use.jpg>)
 ## 3 Use Cases ##
-![alt text](<3 Use Cases.jpg>)
+![alt text](<Use Cases of Website in Use SC.jpg>)
 ### Provide countdown playlist
-![alt text](<3.1 Use Case 1.jpg>)
+![alt text](<Provide countdown playlist.jpg>)
 ## 4 Measures of Effectiveness ##
 ![alt text](<4 Measures of Effectiveness.jpg>)
