@@ -6,7 +6,7 @@ Create a custom Hottest 100 with your friends by combining your Spotify Wrapped 
 
 ### System Design ###
 
-Following a working prototype in python code, system design is now being carried out using the MagicGrid methodology. [View](/system-model/1%20Problem%20Domain/1%20Black%20Box/README.md) the artifacts created during the process.
+Following a working prototype in python code, system design is now being carried out using the MagicGrid methodology. [View](/system-model/model-overview/README.md) the artifacts created during the process.
 
 ## Disclaimer ##
 This program is inspired by, but has no association with, the Australian Broadcast Corporation national radio station [Triple J](https://www.abc.net.au/triplej).\
