@@ -1,6 +1,6 @@
 # Black Box Perspective #
 ## 1 Stakeholder Needs ##
-![alt text](<1 Stakeholder Needs.jpg>)
+![alt text](<Stakeholder Needs.jpg>)
 ## 2 System Context ##
 ![alt text](<Website In Use.jpg>)
 ## 3 Use Cases ##
