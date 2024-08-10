@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var Papa = require("papaparse");
 var fs = require("fs");
+console.log(fs);
 function csvToPlaylist(csvData) {
     var parsedData = Papa.parse(csvData, {
         header: true,
@@ -77,36 +78,45 @@ function createCountdown(combinedList, countdownNumber) {
     var reversedList = trimmedList.reverse();
     return reversedList;
 }
-var filePaths = [
-    'data/website-data/ash.csv',
-    'data/website-data/bee.csv',
-    'data/website-data/billy.csv',
-    'data/website-data/bryce.csv',
-    'data/website-data/cam.csv',
-    'data/website-data/eric.csv',
-    'data/website-data/eve.csv',
-    'data/website-data/gaz.csv',
-    'data/website-data/han.csv',
-    'data/website-data/jack.csv',
-    'data/website-data/james.csv',
-    'data/website-data/jim.csv',
-    'data/website-data/jo.csv',
-    'data/website-data/josh.csv',
-    'data/website-data/kara.csv',
-    'data/website-data/liana.csv',
-    'data/website-data/loz.csv',
-    'data/website-data/oscar.csv',
-    'data/website-data/sam.csv',
-    'data/website-data/sammy.csv'
-];
-var playlists = {};
-var COUNTDOWN_NUMBER = 50;
-filePaths.forEach(function (filePath) {
-    var csvData = fs.readFileSync(filePath, 'utf8');
-    var playlistName = getPlaylistNameFromPath(filePath);
-    playlists[playlistName] = csvToPlaylist(csvData);
-});
-console.log(playlists);
-var combinedList = mergePlaylists(playlists);
-var countdownList = createCountdown(combinedList, COUNTDOWN_NUMBER);
-console.log(countdownList);
+// function generatePlaylist() {
+//     alert("hi");
+// }
+// Ensure the function is accessible globally
+// window.generatePlaylist = generatePlaylist;
+function generatePlaylist() {
+    var filePaths = [
+        'data/website-data/ash.csv',
+        'data/website-data/bee.csv',
+        'data/website-data/billy.csv',
+        'data/website-data/bryce.csv',
+        'data/website-data/cam.csv',
+        'data/website-data/eric.csv',
+        'data/website-data/eve.csv',
+        'data/website-data/gaz.csv',
+        'data/website-data/han.csv',
+        'data/website-data/jack.csv',
+        'data/website-data/james.csv',
+        'data/website-data/jim.csv',
+        'data/website-data/jo.csv',
+        'data/website-data/josh.csv',
+        'data/website-data/kara.csv',
+        'data/website-data/liana.csv',
+        'data/website-data/loz.csv',
+        'data/website-data/oscar.csv',
+        'data/website-data/sam.csv',
+        'data/website-data/sammy.csv'
+    ];
+    var playlists = {};
+    var COUNTDOWN_NUMBER = 50;
+    filePaths.forEach(function (filePath) {
+        var csvData = fs.readFileSync(filePath, 'utf8');
+        var playlistName = getPlaylistNameFromPath(filePath);
+        playlists[playlistName] = csvToPlaylist(csvData);
+    });
+    console.log(playlists);
+    var combinedList = mergePlaylists(playlists);
+    var countdownList = createCountdown(combinedList, COUNTDOWN_NUMBER);
+    console.log(countdownList);
+    alert(countdownList[COUNTDOWN_NUMBER - 1].track);
+}
+// generatePlaylist();
