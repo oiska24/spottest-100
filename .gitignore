@@ -11,6 +11,8 @@ data/links.csv
 docs/*
 venv/
 
+test-setup.sh
+
 # Node artifact files
 node_modules/
 dist/
