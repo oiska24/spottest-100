@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 function mergePlaylists(playlists) {
     var combinedList = [];
     Object.keys(playlists).forEach(function (playlistName) {
@@ -40,9 +38,6 @@ function createCountdown(combinedList, countdownNumber) {
     var reversedList = trimmedList.reverse();
     return reversedList;
 }
-// Ensure the function is accessible globally
-window.generatePlaylist = generatePlaylist;
-// window.generatePlaylist2 = generatePlaylist2;
 function generatePlaylist() {
     var bee = {
         track: [
@@ -308,42 +303,7 @@ function generatePlaylist() {
     var combinedList = mergePlaylists(playlists);
     var countdownList = createCountdown(combinedList, COUNTDOWN_NUMBER);
     console.log(countdownList);
-    // alert(countdownList[COUNTDOWN_NUMBER - 1].track)
+    alert("The number one song is: " + countdownList[COUNTDOWN_NUMBER - 1].track);
 }
-// function generatePlaylist() {
-//     const filePaths = [
-//         'data/website-data/ash.csv',
-//         'data/website-data/bee.csv',
-//         'data/website-data/billy.csv',
-//         'data/website-data/bryce.csv',
-//         'data/website-data/cam.csv',
-//         'data/website-data/eric.csv',
-//         'data/website-data/eve.csv',
-//         'data/website-data/gaz.csv',
-//         'data/website-data/han.csv',
-//         'data/website-data/jack.csv',
-//         'data/website-data/james.csv',
-//         'data/website-data/jim.csv',
-//         'data/website-data/jo.csv',
-//         'data/website-data/josh.csv',
-//         'data/website-data/kara.csv',
-//         'data/website-data/liana.csv',
-//         'data/website-data/loz.csv',
-//         'data/website-data/oscar.csv',
-//         'data/website-data/sam.csv',
-//         'data/website-data/sammy.csv'
-//     ];
-//     const playlists: { [key: string]: Playlist } = {};
-//     const COUNTDOWN_NUMBER = 50;
-//     filePaths.forEach(filePath => {
-//         const csvData = fs.readFileSync(filePath, 'utf8');
-//         const playlistName = getPlaylistNameFromPath(filePath);
-//         playlists[playlistName] = csvToPlaylist(csvData);
-//     });
-//     console.log(playlists);
-//     const combinedList = mergePlaylists(playlists);
-//     const countdownList = createCountdown(combinedList, COUNTDOWN_NUMBER);
-//     console.log(countdownList);
-//     alert(countdownList[COUNTDOWN_NUMBER - 1].track)
-// }
-// generatePlaylist();
+// Ensure the function is accessible globally
+window.generatePlaylist = generatePlaylist;

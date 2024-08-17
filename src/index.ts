@@ -1,52 +1,9 @@
-import * as Papa from 'papaparse';
 interface Playlist {
     track: string[];
     artist: string[];
     weight: number[];
     [key: string]: any[];
 }
-
-// function csvToPlaylist(csvData: string): Playlist {
-//     const parsedData = Papa.parse<Record<string, string | number>>(csvData, {
-//         header: true,
-//         dynamicTyping: true,
-//         skipEmptyLines: true,
-//     });
-
-//     const playlist: Playlist = {
-//         track: [],
-//         artist: [],
-//         weight: [],
-//     };
-
-//     if (parsedData.errors.length > 0) {
-//         console.error('Error parsing CSV:', parsedData.errors);
-//         return playlist;
-//     }
-
-//     parsedData.data.forEach(row => {
-//         playlist.track.push(row.track as string);
-//         playlist.artist.push(row.artist as string);
-//         playlist.weight.push(row.weight as number);
-
-//         // Handling additional columns dynamically
-//         Object.keys(row).forEach(key => {
-//             if (!['track', 'artist', 'weight'].includes(key)) {
-//                 if (!playlist[key]) {
-//                     playlist[key] = [];
-//                 }
-//                 playlist[key].push(row[key]);
-//             }
-//         });
-//     });
-
-//     return playlist;
-// }
-
-// function getPlaylistNameFromPath(filePath: string): string {
-//     const fileName = filePath.split('/').pop() || '';
-//     return fileName.split('.').shift() || 'UnnamedPlaylist';
-// }
 
 interface CombinedPlaylist {
     track: string;
@@ -107,21 +64,6 @@ function createCountdown(combinedList: CombinedPlaylist[], countdownNumber: numb
 }
 
 function generatePlaylist() {
-    console.log("hi");
-}
-
-declare global {
-    interface Window {
-        generatePlaylist: () => void;
-        // generatePlaylist2: () => void;
-    }
-}
-
-// Ensure the function is accessible globally
-window.generatePlaylist = generatePlaylist;
-// window.generatePlaylist2 = generatePlaylist2;
-
-function generatePlaylist2() {
     const bee: Playlist = {
         track: [
             "Late Night",
@@ -392,48 +334,8 @@ function generatePlaylist2() {
     const combinedList = mergePlaylists(playlists);
     const countdownList = createCountdown(combinedList, COUNTDOWN_NUMBER);
     console.log(countdownList);
-    // alert(countdownList[COUNTDOWN_NUMBER - 1].track)
+    alert("The number one song is: " + countdownList[COUNTDOWN_NUMBER - 1].track)
 }
 
-// function generatePlaylist() {
-//     const filePaths = [
-//         'data/website-data/ash.csv',
-//         'data/website-data/bee.csv',
-//         'data/website-data/billy.csv',
-//         'data/website-data/bryce.csv',
-//         'data/website-data/cam.csv',
-//         'data/website-data/eric.csv',
-//         'data/website-data/eve.csv',
-//         'data/website-data/gaz.csv',
-//         'data/website-data/han.csv',
-//         'data/website-data/jack.csv',
-//         'data/website-data/james.csv',
-//         'data/website-data/jim.csv',
-//         'data/website-data/jo.csv',
-//         'data/website-data/josh.csv',
-//         'data/website-data/kara.csv',
-//         'data/website-data/liana.csv',
-//         'data/website-data/loz.csv',
-//         'data/website-data/oscar.csv',
-//         'data/website-data/sam.csv',
-//         'data/website-data/sammy.csv'
-//     ];
-
-//     const playlists: { [key: string]: Playlist } = {};
-
-//     const COUNTDOWN_NUMBER = 50;
-
-//     filePaths.forEach(filePath => {
-//         const csvData = fs.readFileSync(filePath, 'utf8');
-//         const playlistName = getPlaylistNameFromPath(filePath);
-//         playlists[playlistName] = csvToPlaylist(csvData);
-//     });
-
-//     console.log(playlists);
-
-//     const combinedList = mergePlaylists(playlists);
-//     const countdownList = createCountdown(combinedList, COUNTDOWN_NUMBER);
-//     console.log(countdownList);
-//     alert(countdownList[COUNTDOWN_NUMBER - 1].track)
-// }
-// generatePlaylist();
+// Ensure the function is accessible globally
+window.generatePlaylist = generatePlaylist;
