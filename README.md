@@ -4,6 +4,10 @@
 ## About ##
 Create a custom Hottest 100 with your friends by combining your Spotify Wrapped (or other) playlists together in a countdown!
 
+### System Design ###
+
+Following a working prototype in python code, system design is now being carried out using the MagicGrid methodology. [View](/system-model/model-overview/README.md) the artifacts created during the process.
+
 ## Disclaimer ##
 This program is inspired by, but has no association with, the Australian Broadcast Corporation national radio station [Triple J](https://www.abc.net.au/triplej).\
 Apologies that you can't use this out of the box, a little bit of setup is involved to get you going. Instructions are based on a Linux machine.

@@ -1,0 +1,44 @@
+body {
+    background-color: #00CC00; /* Less bright green background */
+    /* background-image: radial-gradient(#000000 1px, transparent 1px); */
+    background-size: 20px 20px; /* Speckled pattern */
+    /* font-family: 'Courier'; */
+    color: #000000;
+    text-align: center;
+    padding-top: 20%;
+}
+
+h1 {
+    font-size: 60px; /* Bigger heading */
+    margin-bottom: 20px;
+}
+
+.spottest-image {
+    width: 25%; /* Adjust the size as needed */
+    display: block;
+    margin: 0 auto 20px auto; /* Center the image and add margin at the bottom */
+}
+
+.generate-button {
+    background-color: #FF0000; /* Bright red */
+    color: #FFFFFF;
+    font-size: 24px;
+    padding: 15px 30px;
+    border: 2px solid #000000;
+    border-radius: 15px; /* Curved edges */
+    cursor: pointer;
+}
+
+.generate-button:hover {
+    background-color: #CC0000; /* Slightly darker red */
+}
+
+.disclaimer {
+    font-size: 10px;
+    margin-top: 10px;
+}
+
+.disclaimer a {
+    color: #0000FF; /* Blue link */
+    text-decoration: underline;
+}

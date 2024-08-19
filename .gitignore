@@ -1,20 +1,23 @@
 credentials/*
 
-data/results/*
-!data/results/
-data/results/individual_lists/*
-!data/results/individual_lists/
+src/python/data/results/*
+!src/python/data/results/
+src/python/data/results/individual_lists/*
+!src/python/data/results/individual_lists/
 
-data/links.csv
+src/python/data/links.csv
 
-!data/sample_links.csv
+!src/python/data/sample_links.csv
 docs/*
 venv/
 
+test-setup.sh
+
+    "include": ["src/ts/**/*.ts"]
 # Node artifact files
 node_modules/
-dist/
 *.json
+!tsconfig.json
 .env
 .cache
 
@@ -36,7 +39,6 @@ dist/
 
 # Maven
 target/
-dist/
 
 # JetBrains IDE
 .idea/
