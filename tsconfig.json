@@ -1,7 +1,5 @@
 {
     "compilerOptions": {
-        "target": "ES2023",
-        "lib": ["DOM", "ES2023"],
         "outDir": "./src/js",
         "rootDir": "./src/ts"
     }
