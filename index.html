@@ -8,20 +8,18 @@
 </head>
 <body>
     <!-- <button class="generate-button" onclick="generatePlaylist()">Generate Playlist</button> -->
+    <h1>Spottest 100</h1>
+    <img src="src/assets/images/spottest-100.png" alt="Spottest 100" class="spottest-image">
+    
     <div id="main"></div>
     <div id="oauth"></div>
-
+  
     <template id="login">
-        <h1>Spottest 100</h1>
-        <img src="src/assets/images/spottest-100.png" alt="Spottest 100" class="spottest-image">
         <button id="generate-button" data-bind-onclick="loginWithSpotifyClick();"> Generate Playlist </button>
-        <div class="disclaimer">
-            Disclaimer: This program is inspired by, but has no association with, the Australian Broadcast Corporation national radio station <a href="https://www.abc.net.au/triplej">Triple J</a>.
-        </div>
     </template>
 
     <template id="logged-in-template">
-        <h1>Logged in as <span data-bind="display_name"></span></h1>
+        <h3>Logged in as <span data-bind="display_name"></span></h3>
         <img width="150" data-bind-src="images[0].url" data-bind-alt="display_name" />
         <table>
         <tr>
@@ -81,7 +79,9 @@
         </tr>
         </table>
     </template>
-
+    <div class="disclaimer">
+        Disclaimer: This program is inspired by, but has no association with, the Australian Broadcast Corporation national radio station <a href="https://www.abc.net.au/triplej">Triple J</a>.
+    </div>
     <script src="index.js" defer></script>
 
 </body>

@@ -48,8 +48,9 @@ if (code) {
 // If we have a token, we're logged in, so fetch user data and render logged in template
 if (currentToken.access_token) {
     (async () => {
-        const userData = await getUserData();
-        renderTemplate("main", "logged-in-template", userData);
+        // const userData: UserData = await getUserData();
+        const userPlaylists = await getUserPlaylists();
+        renderTemplate("main", "logged-in-template", userPlaylists);
         renderTemplate("oauth", "oauth-template", currentToken);
     })();
 }
@@ -115,6 +116,13 @@ async function refreshToken() {
 }
 async function getUserData() {
     const response = await fetch("https://api.spotify.com/v1/me", {
+        method: 'GET',
+        headers: { 'Authorization': 'Bearer ' + currentToken.access_token },
+    });
+    return await response.json();
+}
+async function getUserPlaylists() {
+    const response = await fetch("https://api.spotify.com/v1/playlists", {
         method: 'GET',
         headers: { 'Authorization': 'Bearer ' + currentToken.access_token },
     });

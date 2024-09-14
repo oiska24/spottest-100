@@ -28,6 +28,16 @@ interface UserData {
     email: string;
 }
 
+interface UserPlaylists { 
+    href: string;
+    limit: number;
+    next: string;
+    offset: number;
+    previous: string;
+    total: number;
+    items: Array<any>; // Specify the type of items, e.g., Array<any> or Array<YourItemType>
+}
+
 // Data structure that manages the current active token, caching it in localStorage
 const currentToken = {
     get access_token(): string | null { return localStorage.getItem('access_token'); },
@@ -69,8 +79,9 @@ if (code) {
 // If we have a token, we're logged in, so fetch user data and render logged in template
 if (currentToken.access_token) {
     (async () => {
-        const userData: UserData = await getUserData();
-        renderTemplate("main", "logged-in-template", userData);
+        // const userData: UserData = await getUserData();
+        const userPlaylists: UserPlaylists = await getUserPlaylists();
+        renderTemplate("main", "logged-in-template", userPlaylists);
         renderTemplate("oauth", "oauth-template", currentToken);
     })();
 }
@@ -149,6 +160,15 @@ async function refreshToken(): Promise<TokenResponse> {
 
 async function getUserData(): Promise<UserData> {
     const response = await fetch("https://api.spotify.com/v1/me", {
+        method: 'GET',
+        headers: { 'Authorization': 'Bearer ' + currentToken.access_token },
+    });
+
+    return await response.json();
+}
+
+async function getUserPlaylists(): Promise<UserPlaylists> {
+    const response = await fetch("https://api.spotify.com/v1/playlists", {
         method: 'GET',
         headers: { 'Authorization': 'Bearer ' + currentToken.access_token },
     });
