@@ -1,12 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 function mergePlaylists(playlists) {
-    var combinedList = [];
-    Object.keys(playlists).forEach(function (playlistName) {
-        var playlist = playlists[playlistName];
-        playlist.track.forEach(function (track, index) {
-            var artist = playlist.artist[index];
-            var weight = playlist.weight[index];
+    const combinedList = [];
+    Object.keys(playlists).forEach(playlistName => {
+        const playlist = playlists[playlistName];
+        playlist.track.forEach((track, index) => {
+            const artist = playlist.artist[index];
+            const weight = playlist.weight[index];
             // Check if the track-artist combination already exists in the combined list
-            var existingEntry = combinedList.find(function (entry) { return entry.track === track && entry.artist === artist; });
+            const existingEntry = combinedList.find(entry => entry.track === track && entry.artist === artist);
             if (existingEntry) {
                 // If it exists, update the weight and the source index
                 existingEntry.weight += weight;
@@ -14,11 +16,11 @@ function mergePlaylists(playlists) {
             }
             else {
                 // If it doesn't exist, create a new entry with nulls for all sources except the current one
-                var newEntry = {
-                    track: track,
-                    artist: artist,
-                    weight: weight,
-                    sources: Object.keys(playlists).reduce(function (acc, key) {
+                const newEntry = {
+                    track,
+                    artist,
+                    weight,
+                    sources: Object.keys(playlists).reduce((acc, key) => {
                         acc[key] = key === playlistName ? index + 1 : null;
                         return acc;
                     }, {}),
@@ -28,18 +30,18 @@ function mergePlaylists(playlists) {
         });
     });
     // Sort the combined list in descending order by weight
-    combinedList.sort(function (a, b) { return b.weight - a.weight; });
+    combinedList.sort((a, b) => b.weight - a.weight);
     return combinedList;
 }
 function createCountdown(combinedList, countdownNumber) {
     // Trim the list to only include the top `countdownNumber` songs
-    var trimmedList = combinedList.slice(0, countdownNumber);
+    const trimmedList = combinedList.slice(0, countdownNumber);
     // Reverse the order of the tracks
-    var reversedList = trimmedList.reverse();
+    const reversedList = trimmedList.reverse();
     return reversedList;
 }
 function generatePlaylist() {
-    var bee = {
+    const bee = {
         track: [
             "Late Night",
             "Because You Move Me",
@@ -248,7 +250,7 @@ function generatePlaylist() {
             110, 109, 108, 107, 106, 105, 104, 103, 102, 101, 90, 89, 88, 87, 86, 85, 84, 83, 82, 81, 80, 79, 78, 77, 76, 75, 74, 73, 72, 71, 70, 69, 68, 67, 66, 65, 64, 63, 62, 61, 60, 59, 58, 57, 56, 55, 54, 53, 52, 51, 50, 49, 48, 47, 46, 45, 44, 43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1
         ]
     };
-    var gaz = {
+    const gaz = {
         track: [
             "Through The Wire", "Family Business", "The Downeaster 'Alexa'", "Jesus Walks", "Jail",
             "Say Nothing (feat. MAY-A)", "brothers", "Waiting For Nothing (feat. Yaeger)", "Never Let Me Down",
@@ -295,15 +297,15 @@ function generatePlaylist() {
             110, 109, 108, 107, 106, 105, 104, 103, 102, 101, 90, 89, 88, 87, 86, 85, 84, 83, 82, 81, 80, 79, 78, 77, 76, 75, 74, 73, 72, 71, 70, 69, 68, 67, 66, 65, 64, 63, 62, 61, 60, 59, 58, 57, 56, 55, 54, 53, 52, 51, 50, 49, 48, 47, 46, 45, 44, 43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1
         ]
     };
-    var playlists = {};
-    var COUNTDOWN_NUMBER = 50;
+    const playlists = {};
+    const COUNTDOWN_NUMBER = 50;
     playlists["bee"] = bee;
     playlists["gaz"] = gaz;
     console.log(playlists);
-    var combinedList = mergePlaylists(playlists);
-    var countdownList = createCountdown(combinedList, COUNTDOWN_NUMBER);
+    const combinedList = mergePlaylists(playlists);
+    const countdownList = createCountdown(combinedList, COUNTDOWN_NUMBER);
     console.log(countdownList);
     alert("The number one song is: " + countdownList[COUNTDOWN_NUMBER - 1].track);
 }
 // Ensure the function is accessible globally
-window.generatePlaylist = generatePlaylist;
+// window.generatePlaylist = generatePlaylist;

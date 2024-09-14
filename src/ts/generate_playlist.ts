@@ -337,5 +337,10 @@ function generatePlaylist() {
     alert("The number one song is: " + countdownList[COUNTDOWN_NUMBER - 1].track)
 }
 
+// Extend the Window interface to include generatePlaylist
+interface Window {
+    generatePlaylist: () => void;
+}
+
 // Ensure the function is accessible globally
-window.generatePlaylist = generatePlaylist;
+// window.generatePlaylist = generatePlaylist;

@@ -7,12 +7,82 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Spottest 100</h1>
-    <img src="src/assets/images/spottest-100-generated.png" alt="Spottest 100" class="spottest-image">
-    <button class="generate-button" onclick="generatePlaylist()">Generate Playlist</button>
-    <div class="disclaimer">
-        Disclaimer: This program is inspired by, but has no association with, the Australian Broadcast Corporation national radio station <a href="https://www.abc.net.au/triplej">Triple J</a>.
-    </div>
+    <!-- <button class="generate-button" onclick="generatePlaylist()">Generate Playlist</button> -->
+    <div id="main"></div>
+    <div id="oauth"></div>
+
+    <template id="login">
+        <h1>Spottest 100</h1>
+        <img src="src/assets/images/spottest-100.png" alt="Spottest 100" class="spottest-image">
+        <button id="generate-button" data-bind-onclick="loginWithSpotifyClick();"> Generate Playlist </button>
+        <div class="disclaimer">
+            Disclaimer: This program is inspired by, but has no association with, the Australian Broadcast Corporation national radio station <a href="https://www.abc.net.au/triplej">Triple J</a>.
+        </div>
+    </template>
+
+    <template id="logged-in-template">
+        <h1>Logged in as <span data-bind="display_name"></span></h1>
+        <img width="150" data-bind-src="images[0].url" data-bind-alt="display_name" />
+        <table>
+        <tr>
+            <td>Display name</td>
+            <td data-bind="display_name"></td>
+        </tr>
+        <tr>
+            <td>Id</td>
+            <td data-bind="id"></td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td data-bind="email"></td>
+        </tr>
+        <tr>
+            <td>Spotify URI</td>
+            <td>
+            <a data-bind="external_urls.spotify" data-bind-href="external_urls.spotify"></a>
+            </td>
+        </tr>
+        <tr>
+            <td>Link </dt>
+            <td>
+            <a data-bind="href" data-bind-href="href"></a>
+            </td>
+        </tr>
+        <tr>
+            <td>Profile Image</td>
+            <td>
+            <a data-bind-href="images[0].url" data-bind="images[0].url"></a>
+            </td>
+        </tr>
+        <tr>
+            <td>Country</td>
+            <td data-bind="country"></td>
+        </tr>
+        </table>
+
+        <button id="refresh-token-button" data-bind-onclick="refreshTokenClick();">Refresh Token</button>
+        <button id="logout-button" data-bind-onclick="logoutClick();">Log out</button>
+    </template>
+
+    <template id="oauth-template">
+        <h2>oAuth info</h2>
+        <table>
+        <tr>
+            <td>Access token</td>
+            <td data-bind="access_token"></td>
+        </tr>
+        <tr>
+            <td>Refresh token</td>
+            <td data-bind="refresh_token"></td>
+        </tr>
+        <tr>
+            <td>Expiration at</td>
+            <td data-bind="expires">${getExpirationDate(expires_in)}</td>
+        </tr>
+        </table>
+    </template>
+
     <script src="index.js" defer></script>
+
 </body>
 </html>

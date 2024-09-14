@@ -1,6 +1,12 @@
 {
     "compilerOptions": {
         "outDir": "./src/js",
-        "rootDir": "./src/ts"
+        "rootDir": "./src/ts",
+        "target": "es2023",
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        // "paths": {
+        //     "undici-types": ["node_modules/undici/types"]
+        // }
     }
 }
