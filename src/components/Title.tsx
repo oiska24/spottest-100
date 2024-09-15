@@ -3,7 +3,7 @@ function Title() {
         <div className="App">
             <h1>Spottest 100</h1>
             <div>
-                <img src="/public/spottest-100.png" className="logo" alt="Spottest 100 logo" />
+                <img src="./public/spottest-100.png" className="logo" alt="Spottest 100 logo" />
             </div>
         </div>
     )
