@@ -63,7 +63,7 @@ function createCountdown(combinedList: CombinedPlaylist[], countdownNumber: numb
     return reversedList;
 }
 
-function generatePlaylist() {
+export function generatePlaylist() {
     const bee: Playlist = {
         track: [
             "Late Night",
