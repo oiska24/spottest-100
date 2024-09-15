@@ -21,7 +21,8 @@
     <template id="logged-in-template">
         <h3>Logged in as <span data-bind="display_name"></span></h3>
         <img width="150" data-bind-src="images[0].url" data-bind-alt="display_name" />
-        <table>
+        <!-- <div data-bind="items.name">Playlists</div> -->
+        <!-- <table>
         <tr>
             <td>Display name</td>
             <td data-bind="display_name"></td>
@@ -56,7 +57,7 @@
             <td>Country</td>
             <td data-bind="country"></td>
         </tr>
-        </table>
+        </table> -->
 
         <button id="refresh-token-button" data-bind-onclick="refreshTokenClick();">Refresh Token</button>
         <button id="logout-button" data-bind-onclick="logoutClick();">Log out</button>
