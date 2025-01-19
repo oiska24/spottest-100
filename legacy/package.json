@@ -1,0 +1,32 @@
+{
+  "dependencies": {
+    "typescript": "^5.5.4",
+    "undici": "^6.19.8",
+    "undici-types": "^6.19.8"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "webpack": "^5.93.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "name": "spottest-100",
+  "version": "1.0.0",
+  "description": "making playlists",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "start": "http-server"
+  },
+  "keywords": [],
+  "author": "Oscar Elsasser",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oiska24/spottest-100.git"
+  },
+  "bugs": {
+    "url": "https://github.com/oiska24/spottest-100/issues"
+  },
+  "homepage": "https://github.com/oiska24/spottest-100#readme"
+}
