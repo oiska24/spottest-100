@@ -1,12 +1,26 @@
-interface Generation {
-    color: string;
-    onClick: () => void;
-}
+// interface Generation {
+//     color: string;
+//     onClick: () => void;
+// }
 
-const GeneratorButton = ({color, onClick}: Generation) => {
+// const GeneratorButton = ({color, onClick}: Generation) => {
+//     return (
+//         <button type="button" className={"btn btn-" + color} onClick={onClick}>Generate Playlist</button>
+//     )
+// }
+
+// export default GeneratorButton;
+
+
+import React from 'react';
+import SpotifyAuth from './SpotifyAuth';
+
+const GeneratorButton: React.FC = () => {
     return (
-        <button type="button" className={"btn btn-" + color} onClick={onClick}>Generate Playlist</button>
-    )
-}
+        <div>
+            <SpotifyAuth />
+        </div>
+    );
+};
 
 export default GeneratorButton;
