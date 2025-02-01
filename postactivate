@@ -1,5 +1,0 @@
-# Get the path to the spotipy package
-SPOTIPY_PATH=$(python -c "import spotipy; print(spotipy.__path__[0])")
-
-# Create a py.typed file in the spotipy package directory
-touch "${SPOTIPY_PATH}/py.typed"

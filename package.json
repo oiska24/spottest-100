@@ -1,0 +1,42 @@
+{
+  "homepage": "http://oiska24.github.io/spottest-100",
+  "name": "spottest-100",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist --cname spottest100.com.au",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "bootstrap": "^5.2.3",
+    "node": "^23.7.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@types/react": "^19.0.7",
+    "@types/react-dom": "^19.0.3",
+    "@vitejs/plugin-react": "^4.3.4",
+    "cross-env": "^7.0.3",
+    "gh-pages": "^6.3.0",
+    "typescript": "^5.7.3",
+    "vite": "^6.0.11"
+  },
+  "description": "![alt text](images/spottest-100.png)",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oiska24/spottest-100.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oiska24/spottest-100/issues"
+  }
+}

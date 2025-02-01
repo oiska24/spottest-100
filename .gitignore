@@ -11,13 +11,8 @@ src/python/data/links.csv
 docs/*
 venv/
 
-test-setup.sh
-
-    "include": ["src/ts/**/*.ts"]
 # Node artifact files
 node_modules/
-*.json
-!tsconfig.json
 .env
 .cache
 
